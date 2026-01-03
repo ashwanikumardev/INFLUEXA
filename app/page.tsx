@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import TypingText from '@/components/Terminal/TypingText';
 import Cursor from '@/components/Terminal/Cursor';
 import TerminalWindow from '@/components/Terminal/TerminalWindow';
+import CommandLine from '@/components/Terminal/CommandLine';
 
 export default function Home() {
   const [bootComplete, setBootComplete] = useState(false);
@@ -150,8 +151,64 @@ export default function Home() {
               <div className="command-prompt">contact --new <span style={{ color: 'var(--terminal-muted)' }}>— Get in touch</span></div>
             </div>
             <div style={{ marginTop: 'var(--spacing-md)', color: 'var(--terminal-muted)', fontSize: '12px' }}>
-              <p>&gt; Use the navigation menu above or type commands to explore</p>
+              <p>&gt; Use the navigation menu above or type commands below to explore</p>
               <p>&gt; All systems operational <Cursor /></p>
+            </div>
+          </TerminalWindow>
+        </div>
+      )}
+
+      {/* Interactive Command Line */}
+      {showStats && (
+        <div className="fade-in" style={{ marginTop: 'var(--spacing-lg)' }}>
+          <TerminalWindow title="terminal">
+            <CommandLine
+              prompt="user@influexa:~$"
+              placeholder="Type a command (e.g., cat /about, ./process, help)..."
+              onCommand={(cmd) => {
+                const command = cmd.trim().toLowerCase();
+
+                // Command routing
+                if (command === 'cat /about' || command === 'about') {
+                  window.location.href = '/about';
+                } else if (command === './process' || command === 'process' || command === 'how-it-works') {
+                  window.location.href = '/how-it-works';
+                } else if (command === 'ls /creators' || command === 'creators') {
+                  window.location.href = '/creators';
+                } else if (command === 'tail -f /logs' || command === 'logs' || command === 'campaigns') {
+                  window.location.href = '/campaigns';
+                } else if (command === './verify' || command === 'verify' || command === 'trust') {
+                  window.location.href = '/trust';
+                } else if (command === 'contact --new' || command === 'contact') {
+                  window.location.href = '/contact';
+                } else if (command === 'login --brand' || command === 'brand') {
+                  window.location.href = '/login/brand';
+                } else if (command === 'login --creator' || command === 'creator') {
+                  window.location.href = '/login/creator';
+                } else if (command === 'help' || command === '?') {
+                  alert('Available commands:\n\n' +
+                    'cat /about - Learn about our system\n' +
+                    './process - See how it works\n' +
+                    'ls /creators - Browse creator network\n' +
+                    'tail -f /logs - View campaign logs\n' +
+                    './verify - Check trust metrics\n' +
+                    'contact --new - Get in touch\n' +
+                    'login --brand - Brand login\n' +
+                    'login --creator - Creator login\n' +
+                    'clear - Clear terminal\n' +
+                    'help - Show this message');
+                } else if (command === 'clear' || command === 'cls') {
+                  // Refresh the page to clear
+                  window.location.reload();
+                } else if (command === '' || command === 'cd ~' || command === 'home') {
+                  window.location.href = '/';
+                } else {
+                  alert(`Command not found: ${cmd}\nType 'help' for available commands.`);
+                }
+              }}
+            />
+            <div style={{ marginTop: 'var(--spacing-sm)', color: 'var(--terminal-muted)', fontSize: '11px' }}>
+              <p>💡 Tip: Type 'help' to see all available commands</p>
             </div>
           </TerminalWindow>
         </div>
