@@ -12,7 +12,7 @@ export default function Home() {
 
   const bootSequence = [
     '> SYSTEM BOOT...',
-    '> Loading influexa.com v1.0.0',
+    '> Loading influexa v1.0.0',
     '> Initializing creator-brand interface...',
     '> Checking database connections... [OK]',
     '> Loading analytics engine... [OK]',
